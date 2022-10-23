@@ -75,28 +75,35 @@ function RoomPage({ roomsList, currentRoomData, username }) {
   }, [currentRoom.id, username])
 
   return (
-    <View>
-      <Flex direction={{ base: 'column', medium: 'row' }}>
-        <ConversationBar rooms={rooms} onRoomChange={handleRoomChange} />
-        <View flex={{ base: 0, medium: 1 }}>
-          <View margin="0 auto" maxWidth={{ base: '95vw', medium: '100vw' }}>
-            <Heading
-              style={{ borderBottom: '1px solid black' }}
-              padding={tokens.space.small}
-              textAlign={'center'}
-              level={3}
-              color={tokens.colors.blue[60]}
-            >
-              {currentRoom.name}
-            </Heading>
-            <Flex direction="column" height="85vh">
-              <MessageList messages={messages} myUsername={username} />
-              <InputArea onMessageSend={handleMessageSend} />
-            </Flex>
-          </View>
+    <main>
+      <div className="container mx-auto p-3">
+        <View>
+          <Flex direction={{ base: 'column', medium: 'row' }}>
+            <ConversationBar rooms={rooms} onRoomChange={handleRoomChange} />
+            <View flex={{ base: 0, medium: 1 }}>
+              <View
+                margin="0 auto"
+                maxWidth={{ base: '95vw', medium: '100vw' }}
+              >
+                <Heading
+                  style={{ borderBottom: '1px solid black' }}
+                  padding={tokens.space.small}
+                  textAlign={'center'}
+                  level={3}
+                  color={tokens.colors.blue[60]}
+                >
+                  {currentRoom.name}
+                </Heading>
+                <Flex direction="column" height="85vh">
+                  <MessageList messages={messages} myUsername={username} />
+                  <InputArea onMessageSend={handleMessageSend} />
+                </Flex>
+              </View>
+            </View>
+          </Flex>
         </View>
-      </Flex>
-    </View>
+      </div>
+    </main>
   )
 }
 

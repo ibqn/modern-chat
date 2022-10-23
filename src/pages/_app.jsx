@@ -3,6 +3,8 @@ import { AmplifyProvider } from '@aws-amplify/ui-react'
 import config from '../aws-exports'
 import '@aws-amplify/ui-react/styles.css'
 
+import 'styles/globals.css'
+
 Amplify.configure({ ...config, ssr: true })
 
 function MyApp({ Component, pageProps }) {

@@ -40,32 +40,36 @@ function Home({ signOut, user }) {
   }
 
   return (
-    <View>
-      <Flex justifyContent={'end'}>
-        <Button onClick={signOut}>Sign Out</Button>
-      </Flex>
-      <Text marginBlockEnd={'relative.large'}>
-        Hey, {user.username}! Select a room to chat in or create your own public
-        room.
-      </Text>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          width="300px"
-          label="New Room Name"
-          placeholder="product-love"
-          onChange={(e) => setRoomName(e.target.value)}
-        />
-      </form>
-      <ul>
-        {rooms.map((room) => (
-          <li key={room.id}>
-            <NextLink href={`/rooms/${room.id}`}>
-              <Link>{room.name}</Link>
-            </NextLink>
-          </li>
-        ))}
-      </ul>
-    </View>
+    <main>
+      <div className="container mx-auto p-3">
+        <View>
+          <Flex justifyContent={'end'}>
+            <Button onClick={signOut}>Sign Out</Button>
+          </Flex>
+          <Text marginBlockEnd={'relative.large'}>
+            Hey, {user.username}! Select a room to chat in or create your own
+            public room.
+          </Text>
+          <form onSubmit={handleSubmit}>
+            <TextField
+              width="300px"
+              label="New Room Name"
+              placeholder="product-love"
+              onChange={(e) => setRoomName(e.target.value)}
+            />
+          </form>
+          <ul>
+            {rooms.map((room) => (
+              <li key={room.id}>
+                <NextLink href={`/rooms/${room.id}`}>
+                  <Link>{room.name}</Link>
+                </NextLink>
+              </li>
+            ))}
+          </ul>
+        </View>
+      </div>
+    </main>
   )
 }
 
