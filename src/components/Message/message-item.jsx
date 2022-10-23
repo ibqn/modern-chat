@@ -9,12 +9,11 @@ import {
 } from '@aws-amplify/ui-react'
 import { Storage } from 'aws-amplify'
 import { useEffect, useState } from 'react'
+import { parseISO, formatDistanceToNow } from 'date-fns'
 
 export const MessageItem = ({ msg = {}, myUsername }) => {
   const { tokens } = useTheme()
-  if (msg.content.imageId) {
-    // console.log('the message', msg)
-  }
+
   const isMyMsg = msg.owner === myUsername
   const isEdited = msg.createdAt !== msg.updatedAt
   const isImage = msg.content.imageId !== null
@@ -46,7 +45,9 @@ export const MessageItem = ({ msg = {}, myUsername }) => {
                 fontSize={'12px'}
                 fontWeight="normal"
               >
-                {msg.createdAt}
+                {formatDistanceToNow(parseISO(msg.createdAt), {
+                  addSuffix: true,
+                })}
               </Text>
             </Heading>
           </Flex>
