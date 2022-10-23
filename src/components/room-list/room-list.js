@@ -16,7 +16,7 @@ export const RoomList = ({ handleMenuToggle, rooms = [] }) => {
             <TableCell as="th">Application Rooms</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody className="cursor-pointer">
           {rooms.map((room) => (
             <TableRow
               key={room.id}
