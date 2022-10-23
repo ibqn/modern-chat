@@ -11,7 +11,6 @@ import { onCreateMessageByRoomId } from 'graphql/subscriptions'
 import { useRouter } from 'next/router'
 
 function RoomPage({ roomsList, currentRoomData, username }) {
-  console.log(username)
   const { tokens } = useTheme()
   const router = useRouter()
   const [messages, setMessages] = useState([])
@@ -19,9 +18,8 @@ function RoomPage({ roomsList, currentRoomData, username }) {
   const [currentRoom, setCurrentRoom] = useState(currentRoomData)
 
   const handleMessageSend = async (newMessage, imgKey) => {
-    const createNewMsg = async (text, imageId) => {
-      let content = { text, imageId }
-      return await API.graphql({
+    const createNewMsg = (content) =>
+      API.graphql({
         query: createMessage,
         variables: {
           input: {
@@ -30,18 +28,15 @@ function RoomPage({ roomsList, currentRoomData, username }) {
           },
         },
       })
-    }
 
-    if (newMessage && !imgKey) {
-      createNewMsg(newMessage).then(({ data }) =>
-        setMessages([data.createMessage, ...messages])
-      )
-    } else if (!newMessage && imgKey) {
-      console.log('the imgkey', imgKey)
-      createNewMsg(undefined, imgKey).then(({ data }) =>
-        setMessages([data.createMessage, ...messages])
-      )
-    }
+    const text = newMessage ?? undefined
+    const imageId = imgKey ?? undefined
+    const messageContent = { text, imageId }
+
+    console.log('message content', messageContent)
+
+    const { data } = await createNewMsg(messageContent)
+    setMessages([data.createMessage, ...messages])
   }
 
   const handleRoomChange = (roomID) => {
@@ -80,30 +75,28 @@ function RoomPage({ roomsList, currentRoomData, username }) {
   }, [currentRoom.id, username])
 
   return (
-    <>
-      <View>
-        <Flex direction={{ base: 'column', medium: 'row' }}>
-          <ConversationBar rooms={rooms} onRoomChange={handleRoomChange} />
-          <View flex={{ base: 0, medium: 1 }}>
-            <View margin="0 auto" maxWidth={{ base: '95vw', medium: '100vw' }}>
-              <Heading
-                style={{ borderBottom: '1px solid black' }}
-                padding={tokens.space.small}
-                textAlign={'center'}
-                level={3}
-                color={tokens.colors.blue[60]}
-              >
-                {currentRoom.name}
-              </Heading>
-              <Flex direction="column" height="85vh">
-                <MessageList messages={messages} myUsername={username} />
-                <InputArea onMessageSend={handleMessageSend} />
-              </Flex>
-            </View>
+    <View>
+      <Flex direction={{ base: 'column', medium: 'row' }}>
+        <ConversationBar rooms={rooms} onRoomChange={handleRoomChange} />
+        <View flex={{ base: 0, medium: 1 }}>
+          <View margin="0 auto" maxWidth={{ base: '95vw', medium: '100vw' }}>
+            <Heading
+              style={{ borderBottom: '1px solid black' }}
+              padding={tokens.space.small}
+              textAlign={'center'}
+              level={3}
+              color={tokens.colors.blue[60]}
+            >
+              {currentRoom.name}
+            </Heading>
+            <Flex direction="column" height="85vh">
+              <MessageList messages={messages} myUsername={username} />
+              <InputArea onMessageSend={handleMessageSend} />
+            </Flex>
           </View>
-        </Flex>
-      </View>
-    </>
+        </View>
+      </Flex>
+    </View>
   )
 }
 

@@ -4,6 +4,7 @@ import config from '../aws-exports'
 import '@aws-amplify/ui-react/styles.css'
 
 Amplify.configure({ ...config, ssr: true })
+
 function MyApp({ Component, pageProps }) {
   return (
     <AmplifyProvider>

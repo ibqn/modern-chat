@@ -1,1 +1,1 @@
-export { InputArea } from './InputArea'
+export { InputArea } from './input-area'
