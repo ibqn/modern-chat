@@ -1,2 +1,2 @@
-export { MessageItem } from './MessageItem'
-export { MessageList } from './MessageList'
+export { MessageItem } from './message-item'
+export { MessageList } from './message-list'
